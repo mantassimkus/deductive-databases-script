@@ -1,1 +1,356 @@
-e
+\documentclass[12pt]{extarticle}
+
+
+ %\input{macros-presentation}
+\input{macros-book}
+  
+%
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+
+\begin{document}
+
+
+\input{0-preface}
+
+
+\tableofcontents
+
+\section{Introduction (Road Map)}
+
+
+\cleardoublepage
+
+\section{Propositional Logic and Basic Notation}
+
+\newcommand{\allprops}{\Sigma_{prop}}
+
+We recall the basics of \emph{Propositional Logic (PL)}.
+
+
+
+\begin{definition}[Propositional atoms]
+  We assume a (countable, infinite) set $\allprops$  of
+  \emph{propositional atoms} (we usually use $p,q,r,q',p_1,p_2$ and
+  similar sybmolsfor propositional atoms).
+\end{definition}
+
+\begin{definition}[Syntax of PL]
+  We assume a (countable, infinite) set $\allprops$  of
+  \emph{propositional atoms} (we usually use $p,q,r,q',p_1,p_2$ and
+  similar sybmolsfor propositional atoms).  The definition of \emph{formulas} in PL  uses induction:
+  \begin{enumerate}
+  \item Every propositional atom $p\in \allprops$ is a formula.
+  \item The symbols $\top$ and $\bot$ (called ``top'' and ``bottom'', respectively) are formulas.
+   \item If $\varphi$ and $\psi$ are formulas, then also expressions $(\neg \varphi)$, $(\varphi\lor \psi)$, $(\varphi\land \psi)$, and $(\varphi\supset\psi)$ are also formulas.
+  \end{enumerate}
+\end{definition}
+
+
+
+\begin{definition}[Semantics of PL]
+  An \emph{interpretation} $m$ (in PL) is a function
+  $m:\allprops \rightarrow \{0,1\}$.
+\end{definition}
+Intuitively, an interpretation $m$ assigns to every propositional atom
+$p\in \allprops$ some truth value, where $0$ corresponds to $\mathit{false}$ and $1$ corresponds to $\mathit{true}$.
+
+
+\begin{definition}
+  Assume an intepretation $m$ and a propositional atom $p$. We write
+  $m\models p$ if $m(p)=1$. Furhter write:
+  \begin{enumerate}
+  \item $m \models \varphi \land \psi  $, if $m \models \varphi$ and $m \models \psi$;
+  \item $m \models \varphi \lor \psi  $, if $m \models \varphi$ or $m \models \psi$;
+  \item $m \models \neg \varphi $, if $m \not\models \varphi$;
+  \item $m \models  \varphi \supset \psi$, if $m \models  \varphi $ implies $m \models  \psi$ (in other words, if  $m \models  \psi$ or  $m \not\models  \varphi $;
+    
+  \end{enumerate}
+  Assume a formula $\varphi$ and an interpretaiton $m$. If
+  $m\models \varphi$, we say $\varphi$ is \emph{true under} $m$, and
+  that $m$ is a\emph{model} of $\varphi$. If $m\not\models \varphi$,
+  we say $\varphi$ is \emph{false under} $m$. We say a formula
+  $\varphi$ is \emph{satisfiable} if there exists some $m$ such that
+  $m\models \varphi$. \stresspoint We say a formula $\varphi$ is \emph{valid} if
+  $m\models \varphi$ holds for all interpretations $m$. \stresspoint We use
+  $\mathit{mods}(\varphi)$ to denote the set of models of a formula
+  $\varphi$, i.e.\,$\mathit{mods}(\varphi)=\{m\mid m\models\varphi\}$.
+  A pair of formulas $\varphi,\psi$ are \emph{equivalent} if
+  $\mathit{mods}(\varphi)=\mathit{mods}(\psi)$, i.e.\,for all
+  interpretations $m$, we have that $m\models \varphi$ if and only if
+  $m\models \psi$.
+\end{definition}
+\nextslide
+\begin{definition}[Propositional Theories]
+  A set of formulas is called a \emph{(propositional) theory}. An
+  interpretation $m$ is called a \emph{model} of a theory $\Phi$, if
+  $m\models \varphi$ holds for all $\varphi\in \Phi$. If $m$ is a model of a
+  theory $\Phi$, we may write $m\models \Phi$.
+
+  A theory $\Phi$ is called \emph{satisfiable}, if there exists at
+  least one interpretation $m$ such that $m\models \Phi$. We say a
+  theory $\Phi_1$ is \emph{equivalent} to a theory $\Phi_2$, if they
+  have the same models.
+\end{definition}
+Note that a theory $\Phi$ can be seen as the formula
+$\bigwedge_{\varphi\in\Phi}\varphi$, i.e., $\Phi$ and
+$\bigwedge_{\varphi\in\Phi}\varphi$ have exactly the same models.
+
+\begin{definition}[Normal Forms]
+  Formulas in $\{p,\neg p\mid p\in \allprops\}$ are called
+  \emph{literals}, i.e.,\,a literal is a either a propositional atom
+  or the negation of a propositionasl atom. A literal of the form
+  $\neg p$ is said to be \emph{negative}, while literals of the form
+  $p$ are \emph{positive}.
+
+  A \emph{clause} is a formula of the form
+  $\ell_1\lor \cdots\lor \ell_n$, where $\ell_1,\ldots,\ell_n$ are
+  literals. For a clause $C$, let $C^{+}$ denote the positive literals
+  that appear in $C$. For a clause $C$, let $C^{-}$ denote the
+  negative literals that appear in $C$.
+
+  A formula $\varphi$ is in \emph{conjunctive normal form (CNF)} if it
+  has the form $C_1\land \cdots \land C_m$, where $C_1,\ldots,C_m$ are
+  clauses.
+
+  A formula $\varphi$ is called \emph{positive}, if the negation
+  $\neg$ does not occur in $\varphi$.
+
+  A clause $C$ is called a \emph{Horn clause}, if $|C^{+}|\leq 1$,
+  i.e.\,$C$ contains at most one positive literal.
+
+  A clause $C$ is called \emph{definite}, if $|C^{+}|= 1$, i.e.\,$C$
+  contains exactly one one positive literal.
+
+  A formula $\varphi$ in CNF is called a \emph{Horn formula} if all
+  its clauses are Horn clauses.  A formula $\varphi$ in CNF is called
+  a \emph{definite formula} if all its clauses are definite clauses.
+\end{definition}
+
+\begin{proposition}
+  For any formula $\varphi$, one can build a formula $\varphi'$ such
+  that $\varphi$ and $\varphi'$ are equivalent.
+\end{proposition}
+\begin{proof}
+  Use the usual transformations.
+\end{proof}
+
+
+\begin{proposition}
+  Every definite formula $\varphi$ is satisfiable.
+\end{proposition}
+\begin{proof}
+  Assume a definite formula $\varphi$. 
+\end{proof}
+ 
+\subsection{Notation / Model Minimality}
+
+
+Observe that an interpretation $m$ can be \emph{represented} as a set
+$I\subseteq \allprops$.
+\begin{definition}
+Given an intepretation $m$, we let
+$I^{m}=\{p\in\allprops \mid m(p)=1\}$. 
+\end{definition}
+That is, $I^{m}$ is the set of
+atoms that are made true in $m$.
+\begin{definition}
+Given a set $I\subseteq \allprops$,
+we define the interpretation $m_I$ such that: (i) for all $p\in I$,
+$m_{I}(p)=1$, and (ii) for all $p\in \allprops \setminus I$,
+$m_{I}(p)=0$.
+\end{definition}
+Thus from now on, a set $I\subseteq \allprops$ is also
+seen as an interpretation, and the previously defined notions are
+naturally extended. E.g., $I\models \varphi$ means
+$m_{I}\models \varphi$ and so on.
+
+\begin{definition}
+  We say $I\subseteq \allprops$ is a \emph{minimal model} of a formula
+  $\varphi$, if (i) $I$ is a model of $\varphi$, and (ii) there exists
+  no $J\subsetneq I$ such that $J$ is a model of $\varphi$.
+\end{definition}
+\begin{definition}
+We say $I\subseteq \allprops$ is a \emph{maximal model} of a formula
+  $\varphi$, if (i) $I$ is a model of $\varphi$, and (ii) there exists
+  no $J\supsetneq I$ such that $J$ is a model of $\varphi$.
+\end{definition}
+
+\begin{example}
+  Consider the formula $p\supset q$. It has 3 models, which are $I_1=\emptyset$,
+  $I_2=\{q\}$, $I_3=\{p,q\}$. Then $I_1$ is a minimal model, $I_3$ is a maximal model. 
+\end{example}
+Note that a formula might have multiple minimal and maximal models.
+\begin{example}
+  Consider the formula $\varphi = (p \lor q) \land (\neg p\lor \neg q)$. It has 2 models $I_1=\{p\}$ and $I_2=\{p\}$. Observe that $I_1$ is simulaniously a minimal and a maximal model of the formula $\varphi$.
+  The same holds for $I_2$.
+\end{example}
+Note that a formula can have exponentially many minimal models:
+\begin{example}
+  Consider the formula
+  $\varphi = (p_1 \lor q)_1 \land \cdots \land (\neg p_n\lor \neg
+  q_n)$. Each model $I$ of $\varphi$ can be obtained as the union $P\cup Q$, where
+  $P\subseteq\{ p_1,\ldots,p_n\}$ is arbitrary, and $Q = \{q_i\mid p_i\not\in P, 1\leq i \leq n\}$.
+\end{example}
+Some formulas have a unique minimal model.
+\begin{example}
+  Consider the formula $\varphi= \mathit{Rain} \land (\mathit{Rain} \supset \mathit{GrassWet})\land (\mathit{GrassWet} \supset \mathit{GrassSlipery}) $.
+ This formula has a unique minimal model $I = \{ \mathit{Rain}, \mathit{GrassWet},\mathit{GrassSlipery}\}$. 
+\end{example}
+
+
+\cleardoublepage
+
+% \section{Basics of Computational Complexity}
+
+% \subsection{Turing Machine}
+
+% \subsection{Complexity Class}
+
+% \subsection{Reductions / Completeness}
+
+% \subsection{Syntax}
+
+% \subsection{Semantics}
+
+% \subsection{Examples}
+
+\section{Propositional Horn Programs}
+
+\subsection{Syntax}
+
+\subsection{Semantics}
+
+\subsection{Complexity}
+
+\subsection{Running on grid: Turing Machine Encoding}
+
+\section{Datalog}
+
+\subsection{Syntax}
+
+\subsection{Semantics}
+
+\subsection{Complexity}
+
+\subsection{Data complexity}
+
+\subsection{Monotonicity}
+
+\section{Answer Set Programming (Normal Programs)}
+
+
+\subsection{Syntax}
+
+\subsection{Semantics}
+
+\subsection{Complexity}
+
+% \section{Quantified Boolean Formulas}
+
+% \subsection{Syntax}
+
+% \subsection{Semantics}
+
+% \subsection{Encoding of ASP}
+
+\section{Answer Set Programming (Disjunctive Programs)}
+
+\subsection{Syntax}
+
+\subsection{Semantics}
+
+\subsection{Complexity}
+
+
+
+\section{Non-ground ASP}
+
+\section{Strong Equivalence}
+
+\section{Well-founded semantics for logic programs}
+
+
+\section{Towards DLs: Open-world vs Closed-world}
+
+\section{Description Logics: Syntax and Semantics}
+
+\section{Description Logics: Reasoning Tasks}
+
+\section{Description Logics with Closed Predicates}
+
+\subsection{Motivation}
+
+\subsection{Syntax}
+
+\subsection{Semantics}
+
+\subsection{Encoding Closed Predicates using Nominals}
+
+\subsection{Discussion of Non-monotonicity}
+
+\section{Clopen Knowledge Bases}
+
+\subsection{Motivation}
+
+\subsection{Syntax}
+
+\subsection{Semantics}
+
+\subsection{Examples}
+
+\subsection{Discussion of Computational Complexity}
+
+
+\section{Guarded Existential Rules}
+
+\subsection{Motivation}
+
+\subsection{Syntax}
+
+\subsection{Semantics}
+
+\subsection{Examples}
+
+\subsection{Discussion of Computational Complexity and Expressive Power}
+
+
+\section{DL programs}
+
+\subsection{Motivation}
+
+\subsection{Syntax}
+
+\subsection{Semantics}
+
+\subsection{Examples}
+
+\subsection{Discussion of Computational Complexity}
+
+\section{SHACL}
+\label{sec:shacl}
+
+\subsection{Motivation}
+
+\subsection{Syntax}
+
+\subsection{Intuitive Semantics}
+
+\subsection{Semantics by Translation into ASP}
+
+\subsection{Examples}
+
+\end{document}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

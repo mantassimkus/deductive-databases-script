@@ -1,0 +1,9 @@
+
+*.toc
+*.rip
+*.pdf
+*.log
+*.aux
+*.tex~
+.DS_Store
+.#main.tex
